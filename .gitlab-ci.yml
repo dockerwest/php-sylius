@@ -1,0 +1,60 @@
+---
+
+stages:
+  - prepare
+  - build
+  - release
+
+prepare:7.2:
+  stage: prepare
+  tags:
+    - dockerwest
+  script:
+    - docker pull dockerwest/php:7.2
+  only:
+    - master
+
+prepare:7.3:
+  stage: prepare
+  tags:
+    - dockerwest
+  script:
+    - docker pull dockerwest/php:7.3
+  only:
+    - master
+
+build:7.2:
+  stage: build
+  tags:
+    - dockerwest
+  script:
+    - cd 7.2; ./build.sh
+  only:
+    - master
+
+build:7.3:
+  stage: build
+  tags:
+    - dockerwest
+  script:
+    - cd 7.3; ./build.sh
+  only:
+    - master
+
+release:7.2:
+  stage: release
+  tags:
+    - dockerwest
+  script:
+    - docker push dockerwest/php-sylius:7.2
+  only:
+    - master
+
+release:7.3:
+  stage: release
+  tags:
+    - dockerwest
+  script:
+    - docker push dockerwest/php-sylius:7.3
+  only:
+    - master
